@@ -1,142 +1,626 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>GlobalShop | Global Marketplace</title>
 
-  <title>GlobalShop — Online Marketplace</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f5f5f5;color:#222}
+button,input,select{font:inherit}
+button{cursor:pointer}
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
+.top{
+ background:#111827;color:#fff;padding:8px 5%;
+ display:flex;justify-content:space-between;font-size:13px
+}
 
-    body {
-      background: #f5f5f5;
-      color: #222;
-    }
+header{
+ background:#fff;padding:14px 5%;display:flex;align-items:center;
+ gap:20px;position:sticky;top:0;z-index:50;
+ box-shadow:0 2px 8px #0001
+}
+.logo{font-size:25px;font-weight:bold;color:#f97316;white-space:nowrap}
+.search{flex:1;display:flex}
+.search input{
+ width:100%;padding:13px;border:1px solid #ddd;
+ border-radius:7px 0 0 7px;outline:none
+}
+.search button{
+ border:0;background:#f97316;color:#fff;padding:0 20px;
+ border-radius:0 7px 7px 0
+}
+.iconbtn{border:0;background:transparent;font-size:15px;white-space:nowrap}
 
-    /* TOP BAR */
-    .topbar {
-      background: #111827;
-      color: white;
-      padding: 8px 5%;
-      display: flex;
-      justify-content: space-between;
-      font-size: 13px;
-    }
+.cartbtn{position:relative;font-size:24px;background:none;border:0}
+.count{
+ position:absolute;right:-8px;top:-8px;background:red;color:white;
+ width:20px;height:20px;border-radius:50%;font-size:12px;
+ display:flex;align-items:center;justify-content:center
+}
 
-    /* HEADER */
-    header {
-      background: white;
-      padding: 15px 5%;
-      display: flex;
-      align-items: center;
-      gap: 25px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: 0 2px 8px #0001;
-    }
+nav{
+ background:#fff;padding:12px 5%;display:flex;gap:25px;
+ overflow:auto;border-top:1px solid #eee
+}
+nav a{text-decoration:none;color:#333;white-space:nowrap}
 
-    .logo {
-      font-size: 25px;
-      font-weight: bold;
-      color: #f97316;
-      white-space: nowrap;
-    }
+.hero{
+ width:90%;max-width:1300px;margin:20px auto;padding:55px;
+ border-radius:16px;
+ background:linear-gradient(120deg,#fff7ed,#ffedd5)
+}
+.hero h1{font-size:42px;margin-bottom:15px}
+.hero p{font-size:18px;color:#555;max-width:650px;margin-bottom:25px}
+.primary{
+ background:#f97316;color:white;border:0;border-radius:7px;
+ padding:13px 24px;font-weight:bold
+}
 
-    .search {
-      flex: 1;
-      display: flex;
-      max-width: 650px;
-    }
+.section{width:90%;max-width:1300px;margin:30px auto}
+.title{
+ display:flex;justify-content:space-between;align-items:center;
+ margin-bottom:18px
+}
+.title h2{font-size:24px}
 
-    .search input {
-      width: 100%;
-      padding: 13px 16px;
-      border: 1px solid #ddd;
-      border-radius: 7px 0 0 7px;
-      outline: none;
-      font-size: 15px;
-    }
+.categories{
+ display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+ gap:15px
+}
+.category{
+ background:#fff;border-radius:10px;padding:20px 10px;
+ text-align:center;box-shadow:0 2px 7px #0001
+}
+.category:hover{transform:translateY(-3px)}
+.caticon{font-size:34px;margin-bottom:8px}
 
-    .search button {
-      border: none;
-      background: #f97316;
-      color: white;
-      padding: 0 22px;
-      border-radius: 0 7px 7px 0;
-      cursor: pointer;
-      font-size: 18px;
-    }
+.products{
+ display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
+ gap:18px
+}
+.product{
+ background:#fff;border-radius:10px;overflow:hidden;
+ box-shadow:0 2px 8px #0001
+}
+.product img{
+ width:100%;height:190px;object-fit:cover;background:#eee
+}
+.info{padding:13px}
+.name{min-height:38px;margin-bottom:7px}
+.rating{color:#f59e0b;font-size:13px;margin-bottom:7px}
+.price{color:#f97316;font-size:20px;font-weight:bold}
+.old{text-decoration:line-through;color:#999;font-size:13px;margin-left:5px}
+.add{
+ width:100%;border:0;background:#111827;color:white;
+ padding:10px;border-radius:6px;margin-top:10px
+}
+.add:hover{background:#f97316}
 
-    .header-btn {
-      border: none;
-      background: transparent;
-      cursor: pointer;
-      font-size: 15px;
-      white-space: nowrap;
-    }
+.panel{
+ position:fixed;right:-430px;top:0;width:400px;max-width:92%;
+ height:100%;background:#fff;z-index:100;transition:.3s;
+ padding:20px;overflow:auto;box-shadow:-5px 0 20px #0003
+}
+.panel.open{right:0}
+.panelhead{
+ display:flex;justify-content:space-between;align-items:center;
+ margin-bottom:20px
+}
+.close{border:0;background:none;font-size:27px}
 
-    .cart {
-      font-size: 22px;
-      cursor: pointer;
-      position: relative;
-    }
+.cartitem{
+ display:flex;gap:10px;padding:12px 0;border-bottom:1px solid #eee
+}
+.cartitem img{width:65px;height:65px;object-fit:cover;border-radius:6px}
+.remove{border:0;background:none;color:red;font-size:12px}
 
-    .cart-count {
-      position: absolute;
-      top: -10px;
-      right: -10px;
-      background: #ef4444;
-      color: white;
-      width: 19px;
-      height: 19px;
-      border-radius: 50%;
-      font-size: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+.total{
+ margin-top:20px;font-size:20px;font-weight:bold
+}
+.full{
+ width:100%;margin-top:15px;padding:13px;border:0;
+ background:#f97316;color:#fff;border-radius:7px;font-weight:bold
+}
 
-    /* NAV */
-    nav {
-      background: white;
-      border-top: 1px solid #eee;
-      padding: 12px 5%;
-      display: flex;
-      gap: 25px;
-      overflow-x: auto;
-    }
+.modal{
+ display:none;position:fixed;inset:0;background:#0008;
+ z-index:200;align-items:center;justify-content:center;padding:20px
+}
+.modal.show{display:flex}
+.box{
+ background:#fff;width:520px;max-width:100%;
+ max-height:90vh;overflow:auto;border-radius:12px;padding:25px
+}
+.box input,.box select{
+ width:100%;padding:12px;margin:7px 0;
+ border:1px solid #ddd;border-radius:6px
+}
+.payment{
+ background:#f8fafc;padding:15px;margin-top:15px;border-radius:8px
+}
+.payment label{display:block;margin:10px 0}
 
-    nav a {
-      text-decoration: none;
-      color: #333;
-      white-space: nowrap;
-      font-size: 14px;
-    }
+footer{
+ background:#111827;color:#fff;margin-top:50px;padding:40px 5%
+}
+.footergrid{
+ max-width:1300px;margin:auto;
+ display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+ gap:30px
+}
+footer p{color:#cbd5e1;margin-top:9px;font-size:14px}
 
-    /* HERO */
-    .hero {
-      margin: 20px auto;
-      width: 90%;
-      max-width: 1300px;
-      min-height: 280px;
-      border-radius: 15px;
-      padding: 50px;
-      display: flex;
-      align-items: center;
-      background: linear-gradient(120deg, #fff7ed, #ffedd5);
-    }
+.empty{text-align:center;color:#777;padding:30px}
 
-    .hero-text {
-      max-width: 600px;
-    }
+@media(max-width:700px){
+ header{flex-wrap:wrap;gap:10px}
+ .search{order:3;flex-basis:100%}
+ .hero{padding:35px 20px}
+ .hero h1{font-size:30px}
+ .hero p{font-size:15px}
+ .products{grid-template-columns:repeat(2,1fr);gap:10px}
+ .product img{height:150px}
+}
+</style>
+</head>
 
-    .hero h1 {
-      font-size: 42px;
-      margin
+<body>
+
+<div class="top">
+ <span>🌍 GlobalShop</span>
+ <span>🇸🇦 Saudi Arabia | 🇪🇺 Europe</span>
+</div>
+
+<header>
+
+ <div class="logo">GlobalShop</div>
+
+ <div class="search">
+  <input id="search" placeholder="Search products..." oninput="searchProducts()">
+  <button>🔍</button>
+ </div>
+
+ <button class="iconbtn">👤 Account</button>
+
+ <button class="cartbtn" onclick="openCart()">
+  🛒
+  <span class="count" id="count">0</span>
+ </button>
+
+</header>
+
+<nav>
+ <a href="#">Home</a>
+ <a href="#categories">Categories</a>
+ <a href="#products">Products</a>
+ <a href="#">Deals</a>
+ <a href="#">New Arrivals</a>
+</nav>
+
+<section class="hero">
+ <h1>Shop Everything You Love 🛍️</h1>
+ <p>
+  Discover products from different categories with a simple
+  and modern shopping experience for Saudi Arabia and Europe.
+ </p>
+ <button class="primary" onclick="goProducts()">Shop Now →</button>
+</section>
+
+<section class="section" id="categories">
+
+ <div class="title">
+  <h2>Categories</h2>
+ </div>
+
+ <div class="categories">
+
+  <button class="category" onclick="filterCategory('All')">
+   <div class="caticon">🛍️</div>All
+  </button>
+
+  <button class="category" onclick="filterCategory('Electronics')">
+   <div class="caticon">📱</div>Electronics
+  </button>
+
+  <button class="category" onclick="filterCategory('Fashion')">
+   <div class="caticon">👕</div>Fashion
+  </button>
+
+  <button class="category" onclick="filterCategory('Beauty')">
+   <div class="caticon">💄</div>Beauty
+  </button>
+
+  <button class="category" onclick="filterCategory('Home')">
+   <div class="caticon">🏠</div>Home
+  </button>
+
+  <button class="category" onclick="filterCategory('Sports')">
+   <div class="caticon">⚽</div>Sports
+  </button>
+
+ </div>
+</section>
+
+<section class="section" id="products">
+
+ <div class="title">
+  <h2>Featured Products</h2>
+  <span>🔥 Popular</span>
+ </div>
+
+ <div class="products" id="productList">
+
+  <div class="product" data-name="Smart Watch Pro" data-category="Electronics">
+   <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600">
+   <div class="info">
+    <div class="name">Smart Watch Pro</div>
+    <div class="rating">⭐⭐⭐⭐⭐ 4.8</div>
+    <div class="price">SAR 149 <span class="old">SAR 199</span></div>
+    <button class="add" onclick="addCart('Smart Watch Pro',149,'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600')">
+     🛒 Add to Cart
+    </button>
+   </div>
+  </div>
+
+  <div class="product" data-name="Wireless Headphones" data-category="Electronics">
+   <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600">
+   <div class="info">
+    <div class="name">Wireless Headphones</div>
+    <div class="rating">⭐⭐⭐⭐⭐ 4.7</div>
+    <div class="price">SAR 99</div>
+    <button class="add" onclick="addCart('Wireless Headphones',99,'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600')">
+     🛒 Add to Cart
+    </button>
+   </div>
+  </div>
+
+  <div class="product" data-name="Premium Running Shoes" data-category="Fashion">
+   <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600">
+   <div class="info">
+    <div class="name">Premium Running Shoes</div>
+    <div class="rating">⭐⭐⭐⭐⭐ 4.9</div>
+    <div class="price">SAR 179 <span class="old">SAR 229</span></div>
+    <button class="add" onclick="addCart('Premium Running Shoes',179,'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600')">
+     🛒 Add to Cart
+    </button>
+   </div>
+  </div>
+
+  <div class="product" data-name="Luxury Perfume" data-category="Beauty">
+   <img src="https://images.unsplash.com/photo-1541643600914-78b084683601?w=600">
+   <div class="info">
+    <div class="name">Luxury Perfume</div>
+    <div class="rating">⭐⭐⭐⭐⭐ 4.6</div>
+    <div class="price">SAR 129</div>
+    <button class="add" onclick="addCart('Luxury Perfume',129,'https://images.unsplash.com/photo-1541643600914-78b084683601?w=600')">
+     🛒 Add to Cart
+    </button>
+   </div>
+  </div>
+
+  <div class="product" data-name="Travel Backpack" data-category="Fashion">
+   <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600">
+   <div class="info">
+    <div class="name">Premium Travel Backpack</div>
+    <div class="rating">⭐⭐⭐⭐⭐ 4.8</div>
+    <div class="price">SAR 119</div>
+    <button class="add" onclick="addCart('Premium Travel Backpack',119,'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600')">
+     🛒 Add to Cart
+    </button>
+   </div>
+  </div>
+
+  <div class="product" data-name="Gaming Controller" data-category="Electronics">
+   <img src="https://images.unsplash.com/photo-1592840496694-26c035b52b7b?w=600">
+   <div class="info">
+    <div class="name">Wireless Gaming Controller</div>
+    <div class="rating">⭐⭐⭐⭐⭐ 4.7</div>
+    <div class="price">SAR 139</div>
+    <button class="add" onclick="addCart('Wireless Gaming Controller',139,'https://images.unsplash.com/photo-1592840496694-26c035b52b7b?w=600')">
+     🛒 Add to Cart
+    </button>
+   </div>
+  </div>
+
+ </div>
+</section>
+
+<footer>
+ <div class="footergrid">
+
+  <div>
+   <h3>GlobalShop</h3>
+   <p>Global online marketplace.</p>
+  </div>
+
+  <div>
+   <h3>Customer Service</h3>
+   <p>Help Center</p>
+   <p>Contact Us</p>
+   <p>Shipping</p>
+  </div>
+
+  <div>
+   <h3>Shopping</h3>
+   <p>Categories</p>
+   <p>Deals</p>
+   <p>New Arrivals</p>
+  </div>
+
+  <div>
+   <h3>Secure Shopping</h3>
+   <p>🔒 Secure Checkout</p>
+   <p>💳 Online Payment</p>
+  </div>
+
+ </div>
+</footer>
+
+<!-- CART -->
+
+<div class="panel" id="cartPanel">
+
+ <div class="panelhead">
+  <h2>🛒 Cart</h2>
+  <button class="close" onclick="closeCart()">×</button>
+ </div>
+
+ <div id="cartItems"></div>
+
+ <div class="total" id="total">Total: SAR 0</div>
+
+ <button class="full" onclick="checkout()">
+  Proceed to Checkout
+ </button>
+
+</div>
+
+<!-- CHECKOUT -->
+
+<div class="modal" id="checkoutModal">
+
+ <div class="box">
+
+  <div class="panelhead">
+   <h2>📦 Checkout</h2>
+   <button class="close" onclick="closeCheckout()">×</button>
+  </div>
+
+  <input id="name" placeholder="Full Name">
+
+  <input id="phone" placeholder="Phone Number">
+
+  <input id="email" type="email" placeholder="Email">
+
+  <input id="address" placeholder="Delivery Address">
+
+  <select id="country">
+   <option value="">Select Country</option>
+   <option>Saudi Arabia</option>
+   <option>Germany</option>
+   <option>France</option>
+   <option>Italy</option>
+   <option>Spain</option>
+   <option>Netherlands</option>
+   <option>Other Europe</option>
+  </select>
+
+  <div class="payment">
+
+   <h3>💳 Payment</h3>
+
+   <label>
+    <input type="radio" name="pay" value="card" checked>
+    Credit / Debit Card
+   </label>
+
+   <label>
+    <input type="radio" name="pay" value="paypal">
+    PayPal
+   </label>
+
+  </div>
+
+  <button class="full" onclick="placeOrder()">
+   Place Order
+  </button>
+
+ </div>
+
+</div>
+
+<script>
+
+let cart=[];
+
+function addCart(name,price,image){
+
+ cart.push({name,price,image});
+
+ updateCart();
+
+ alert(name+" added to cart!");
+
+}
+
+function updateCart(){
+
+ document.getElementById("count").innerText=cart.length;
+
+ const box=document.getElementById("cartItems");
+
+ box.innerHTML="";
+
+ let total=0;
+
+ if(cart.length===0){
+  box.innerHTML='<div class="empty">Your cart is empty 🛒</div>';
+ }
+
+ cart.forEach((item,index)=>{
+
+  total+=item.price;
+
+  box.innerHTML+=`
+   <div class="cartitem">
+
+    <img src="${item.image}">
+
+    <div style="flex:1">
+     <b>${item.name}</b>
+     <p>SAR ${item.price}</p>
+
+     <button class="remove"
+      onclick="removeCart(${index})">
+      Remove
+     </button>
+    </div>
+
+   </div>
+  `;
+
+ });
+
+ document.getElementById("total").innerText=
+ "Total: SAR "+total;
+
+}
+
+function removeCart(index){
+
+ cart.splice(index,1);
+
+ updateCart();
+
+}
+
+function openCart(){
+
+ document.getElementById("cartPanel")
+ .classList.add("open");
+
+}
+
+function closeCart(){
+
+ document.getElementById("cartPanel")
+ .classList.remove("open");
+
+}
+
+function checkout(){
+
+ if(cart.length===0){
+
+  alert("Your cart is empty.");
+
+  return;
+
+ }
+
+ document.getElementById("checkoutModal")
+ .classList.add("show");
+
+}
+
+function closeCheckout(){
+
+ document.getElementById("checkoutModal")
+ .classList.remove("show");
+
+}
+
+function placeOrder(){
+
+ const name=document.getElementById("name").value.trim();
+ const phone=document.getElementById("phone").value.trim();
+ const email=document.getElementById("email").value.trim();
+ const address=document.getElementById("address").value.trim();
+ const country=document.getElementById("country").value;
+
+ if(!name||!phone||!email||!address||!country){
+
+  alert("Please complete all information.");
+
+  return;
+
+ }
+
+ /*
+   IMPORTANT:
+   Real payment processing will be connected
+   through a secure backend/payment gateway.
+ */
+
+ alert(
+  "Order information is ready!\\n\\n"+
+  "Customer: "+name+"\\n"+
+  "Country: "+country
+ );
+
+ cart=[];
+
+ updateCart();
+
+ closeCheckout();
+
+ closeCart();
+
+}
+
+function searchProducts(){
+
+ const value=document
+ .getElementById("search")
+ .value
+ .toLowerCase();
+
+ document.querySelectorAll(".product")
+ .forEach(product=>{
+
+  const name=product.dataset.name.toLowerCase();
+
+  product.style.display=
+   name.includes(value) ? "block" : "none";
+
+ });
+
+}
+
+function filterCategory(category){
+
+ document.querySelectorAll(".product")
+ .forEach(product=>{
+
+  if(category==="All" ||
+     product.dataset.category===category){
+
+   product.style.display="block";
+
+  }else{
+
+   product.style.display="none";
+
+  }
+
+ });
+
+ goProducts();
+
+}
+
+function goProducts(){
+
+ document.getElementById("products")
+ .scrollIntoView({behavior:"smooth"});
+
+}
+
+updateCart();
+
+</script>
+
+</body>
+</html>
