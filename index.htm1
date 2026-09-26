@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>GlobalShop — Online Marketplace</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f5f5f5;
+      color: #222;
+    }
+
+    /* TOP BAR */
+    .topbar {
+      background: #111827;
+      color: white;
+      padding: 8px 5%;
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+    }
+
+    /* HEADER */
+    header {
+      background: white;
+      padding: 15px 5%;
+      display: flex;
+      align-items: center;
+      gap: 25px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px #0001;
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: bold;
+      color: #f97316;
+      white-space: nowrap;
+    }
+
+    .search {
+      flex: 1;
+      display: flex;
+      max-width: 650px;
+    }
+
+    .search input {
+      width: 100%;
+      padding: 13px 16px;
+      border: 1px solid #ddd;
+      border-radius: 7px 0 0 7px;
+      outline: none;
+      font-size: 15px;
+    }
+
+    .search button {
+      border: none;
+      background: #f97316;
+      color: white;
+      padding: 0 22px;
+      border-radius: 0 7px 7px 0;
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    .header-btn {
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-size: 15px;
+      white-space: nowrap;
+    }
+
+    .cart {
+      font-size: 22px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      background: #ef4444;
+      color: white;
+      width: 19px;
+      height: 19px;
+      border-radius: 50%;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* NAV */
+    nav {
+      background: white;
+      border-top: 1px solid #eee;
+      padding: 12px 5%;
+      display: flex;
+      gap: 25px;
+      overflow-x: auto;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #333;
+      white-space: nowrap;
+      font-size: 14px;
+    }
+
+    /* HERO */
+    .hero {
+      margin: 20px auto;
+      width: 90%;
+      max-width: 1300px;
+      min-height: 280px;
+      border-radius: 15px;
+      padding: 50px;
+      display: flex;
+      align-items: center;
+      background: linear-gradient(120deg, #fff7ed, #ffedd5);
+    }
+
+    .hero-text {
+      max-width: 600px;
+    }
+
+    .hero h1 {
+      font-size: 42px;
+      margin
